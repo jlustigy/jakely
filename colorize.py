@@ -43,3 +43,4 @@ def colorize(vector,cmap='plasma', vmin=None, vmax=None):
     vcolors = scalarmap.to_rgba(vector)
     
     return vcolors,scalarmap,cNorm
+        

@@ -6,3 +6,5 @@ Created on Thu Mar  3 21:42:33 2016
 """
 
 from .colorize import colorize
+from .eyecolor import eyecolor
+import toolbox
