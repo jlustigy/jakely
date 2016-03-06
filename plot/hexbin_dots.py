@@ -58,9 +58,30 @@ def add_hexbin_points(ax,h,Nx,Ny,cval,ms=2., cmap='Greys'):
         if counts[offc]:
             ax.plot(binx,biny,'o',zorder=100, ms=ms, color=ptcolor[offc], markeredgecolor=ptcolor[offc])
             
-def plot_hexbin_dots(x,y,z,ax,cbar_ax1,cbar_ax2,cmap_bin='Spectral_r', cmap_dots='Greys',\
-                     dotsize=4., label_hex='N per bin', label_dots='Median Value per bin',\
-                     gridsize=25): 
+def plot_hexbin_dots(x,y,z,ax=None,cbar_ax1=None,cbar_ax2=None,cmap_bin='Spectral_r', cmap_dots='Greys',\
+                     dotsize=4., label_hex='N per Hex', label_dots='Median Value per Hex',\
+                     gridsize=25, cbar1_orientation='horizontal',\
+                     cbar2_orientation='vertical'): 
+    
+    # Create figure if axes not passed as kwargs
+    if (ax==None) & (cbar_ax1==None) & (cbar_ax2==None):
+        fig = plt.figure(figsize=(11,10))
+        gs = gridspec.GridSpec(2,2, height_ratios=[.1,1], width_ratios=[1,.1]) 
+        cbar_ax1 = plt.subplot(gs[0])
+        cbar_ax1.set_xlabel(r"", labelpad=-100)
+        cbar_ax2 = plt.subplot(gs[3])
+        cbar_ax2.set_ylabel('', rotation=270, labelpad=25)
+        ax = plt.subplot(gs[2])
+        ret = True
+    elif (ax==None) or (cbar_ax1==None) or (cbar_ax2==None):
+        print "Error: Either pass all axes or none"
+        return
+    else:
+        fig = ax.get_figure()
+        ret = False
+        pass
+        
+    
     alpha1 = 0.8
     
     # Set dot colors
@@ -73,8 +94,14 @@ def plot_hexbin_dots(x,y,z,ax,cbar_ax1,cbar_ax2,cmap_bin='Spectral_r', cmap_dots
     add_hexbin_points(ax, h0, x, y, z, ms=dotsize)
     
     # Set hexbin colorbar
-    cb1 = fig.colorbar(h0, cax=cbar_ax1, orientation='horizontal')
+    cb1 = fig.colorbar(h0, cax=cbar_ax1, orientation=cbar1_orientation)
     cb1.set_label(label_hex)
     # Set dot colorbar
-    cb2 = mpl.colorbar.ColorbarBase(cbar_ax2, cmap=cmap_dots, norm=cNorm, orientation='horizontal')
+    cb2 = mpl.colorbar.ColorbarBase(cbar_ax2, cmap=cmap_dots, norm=cNorm, orientation=cbar2_orientation)
     cb2.set_label(label_dots)
+    
+    # Return figure object if just created 
+    if ret:
+        return fig
+    else:
+        return
