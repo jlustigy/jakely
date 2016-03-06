@@ -8,6 +8,8 @@ Created on Fri Mar  4 13:31:55 2016
 import numpy as np
 from jakely import colorize
 import matplotlib as mpl
+import matplotlib.pyplot as plt
+from matplotlib import gridspec
 
 def add_hexbin_points(ax,h,Nx,Ny,cval,ms=2., cmap='Greys'):    
     
