@@ -24,16 +24,12 @@ x = np.random.normal(size=N)
 y = np.random.normal(size=N)
 z = 10 * x  # In this example z is correlated with x
 
-# Create figure for hexbin dots
-fig = plt.figure(figsize=(10,14))
-gs = gridspec.GridSpec(3,1, height_ratios=[0.1,1,0.1])
-ax = plt.subplot(gs[1])
-cbar_ax1 = plt.subplot(gs[0])
-cbar_ax2 = plt.subplot(gs[2])
+# Create hexbin dots plot
+fig = plot_hexbin_dots(x,y,z, label_hex='Hex Density', label_dots='Median Value per Hex')
 
-# Add hexbin dots to figure
-jakely.plot.hexbin_dots(x, y, z, ax, cbar_ax1, cbar_ax2)
-
-fig.tight_layout()
+# Customize axes with returned figure object
+ax = fig.get_axes()[2]
+ax.set_xlim([-4,4]); ax.set_ylim([-4,4])
+ax.set_xlabel('x [units]'); ax.set_ylabel('y [units]') 
 ```
-<img src="https://github.com/jlustigy/jakely/blob/master/examples/example_hexbin_dots1.png" width="50%" height="50%" align="middle" />
+<img src="https://github.com/jlustigy/jakely/blob/master/examples/example_hexbin_dots2.png" width="50%" height="50%" align="middle" />
