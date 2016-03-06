@@ -11,6 +11,8 @@ import jakely
 
 #### Hexbin Dots
 
+Ever wanted to encode more information in a 2D density histogram? With `jakely.plot_hexbin_dots()` you can visualize intrisic properties of the points that fall within each histogram bin to trace gradients in a variable z atop an x,y density distribution.  
+
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
