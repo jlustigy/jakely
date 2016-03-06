@@ -32,4 +32,4 @@ ax = fig.get_axes()[2]
 ax.set_xlim([-4,4]); ax.set_ylim([-4,4])
 ax.set_xlabel('x [units]'); ax.set_ylabel('y [units]') 
 ```
-<img src="https://github.com/jlustigy/jakely/blob/master/examples/example_hexbin_dots2.png" width="50%" height="50%" align="middle" />
+<img src="https://github.com/jlustigy/jakely/blob/master/examples/example_hexbin_dots2.png" width="100%" height="100%" align="middle" />
