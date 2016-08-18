@@ -9,3 +9,4 @@ from .colorize import colorize
 import colorvision
 import toolbox
 import plot
+import ispectrum
