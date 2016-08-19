@@ -76,6 +76,12 @@ def plot_spectrum(wl, spectrum,
                   ytitle="Intensity",
                   title="",
                   **kwargs):
+    """
+    wl :
+        Wavelength [nanometers]
+    spectrum :
+        [W / m^2 / um]
+    """
 
     if np.min(wl) > wlmin: wlmin = np.min(wl)
     if np.max(wl) < wlmax: wlmax = np.max(wl)
@@ -98,6 +104,11 @@ def plot_spectrum(wl, spectrum,
         spectrum = spectrum * F_solar
     else:
         print("Given stellar_spec is not included.")
+
+    # Convert Flux to photon counts
+    umnm = 1e-3
+    hc    = 1.986446e-25  # h*c (kg*m**3/s**2)
+    spectrum = spectrum * umnm * wl / hc
 
     # Plot spectrum
     fig = plt.figure(figsize=(12,8))
