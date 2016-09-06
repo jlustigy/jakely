@@ -10,12 +10,28 @@ mpl.rc('font',family='Times New Roman')
 mpl.rcParams['font.size'] = 18.0
 
 def irgb_string_from_spectrum(wl, spectrum):
+    """
+    Calculates the irgb color given a wavelengh [nm] vs intensity [W/m*m/um]
+    spectrum in the visible.
+    """
+    # Filter possible nans
+    ifin = np.isfinite(spectrum)
+    wl = wl[ifin]
+    spectrum = spectrum[ifin]
+    # Run through ColorPy
     spec = np.vstack([wl, spectrum]).T
     rgb_eye = colormodels.irgb_string_from_rgb (
         colormodels.rgb_from_xyz (ciexyz.xyz_from_spectrum (spec)))
     return rgb_eye
 
 def make_color_swatch(**kwargs):
+    """
+    Generates a little rectangular swatch of the color given. Note that this
+    function accepts only keyword arguments for the Rectangle object.
+
+    Ex:
+        swatch = make_color_swatch(color="orange")
+    """
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
     rect = plt.Rectangle((0.0, 0.0), 1, 1, **kwargs)
@@ -24,7 +40,9 @@ def make_color_swatch(**kwargs):
     return fig
 
 def plot_response(ax=None, wlmin=350, wlmax=750, **kwargs):
-
+    """
+    Adds human eye response curves to an axis.
+    """
     relpath = "../colorvision/eye_response_functions/ciexyz31_1.csv"
     fn = os.path.join(os.path.dirname(__file__), relpath)
     data = np.genfromtxt(fn, delimiter=',')
@@ -34,7 +52,6 @@ def plot_response(ax=None, wlmin=350, wlmax=750, **kwargs):
     x = data[mask,1]
     y = data[mask,2]
     z = data[mask,3]
-
 
     yscale = 1.0
 
@@ -55,7 +72,9 @@ def plot_response(ax=None, wlmin=350, wlmax=750, **kwargs):
 
 
 def rgb_from_wavelength(wl):
-    # get rgb colors for each wavelength
+    """
+    Get rgb colors for each wavelength [nm]
+    """
     num_wl = len(wl)
     rgb_colors = np.empty ((num_wl, 3))
     for i in range (0, num_wl):
@@ -77,10 +96,34 @@ def plot_spectrum(wl, spectrum,
                   title="",
                   **kwargs):
     """
-    wl :
-        Wavelength [nanometers]
-    spectrum :
-        [W / m^2 / um]
+    Plots intensity [W/m*m/um] vs wavelength [nm] across the visible, shading the
+    background above the curve the color the human eye would perceive, and the
+    entire visible spectrum below the curve. Returns Figure object for saving
+    and further artistry.
+
+
+    Parameters
+    ----------
+    wl : array
+        Wavelength grid [nm]
+    spectrum : array
+        Intensity spectrum [W / m^2 / um]
+    wlmin : float
+        Minimum wavelength plotted [nm]
+    wlmax : float
+        Maximum wavelength plotted [nm]
+    show_cie : bool
+        Adds overplotted CIE eye sensitivity curves for reference
+    xtitle : str
+        x-axis label
+    ytitle : str
+        y-axis label
+    title : str
+        Plot title
+
+    Returns
+    -------
+    matplotlib.figure.Figure
     """
 
     if np.min(wl) > wlmin: wlmin = np.min(wl)
@@ -90,6 +133,11 @@ def plot_spectrum(wl, spectrum,
     mask = (wl >= wlmin) & (wl <= wlmax)
     wl = wl[mask]
     spectrum = spectrum[mask]
+
+    # Filter possible nans
+    ifin = np.isfinite(spectrum)
+    wl = wl[ifin]
+    spectrum = spectrum[ifin]
 
     # Read-in solar spectrum
     if stellar_spec is None:
@@ -108,7 +156,7 @@ def plot_spectrum(wl, spectrum,
     # Convert Flux to photon counts
     umnm = 1e-3
     hc    = 1.986446e-25  # h*c (kg*m**3/s**2)
-    spectrum = spectrum * umnm * wl / hc
+    #spectrum = spectrum * umnm * wl / hc
 
     # Plot spectrum
     fig = plt.figure(figsize=(12,8))
@@ -152,7 +200,7 @@ def plot_spectrum(wl, spectrum,
     ax1.set_xlim([wlmin, wlmax])
 
     # Set plot background color to derived rgb color
-    set_figure_colors(fig, foreground="white", background="black")
+    #set_figure_colors(fig, foreground="white", background="black")
     ax1.patch.set_facecolor(rgb_eye)
 
     return fig
