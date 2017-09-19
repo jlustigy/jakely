@@ -9,6 +9,15 @@ A suite of simple python tools
 import jakely
 ```
 
+#### `ColorTable`
+
+Tables of numerical values are inefficient at drawing the eye to the largest and smallest values. Use `ColorTable` to create tables that color the grid cells in a table relative to all other values in the table.   
+
+```python
+jakely.plot.test_colortable()
+```
+<img src="https://github.com/jlustigy/jakely/blob/master/examples/colortable1.png" width="100%" height="100%" align="middle" />
+
 #### Hexbin Dots
 
 Ever wanted to encode more information in a 2D density histogram? With `jakely.plot_hexbin_dots()` you can visualize intrisic properties of the points that fall within each histogram bin to trace gradients in a variable z atop an x,y density distribution.  
