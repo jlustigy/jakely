@@ -20,7 +20,8 @@ __all__ = ["ColorTable", "test_colortable"]
 def ColorTable(xlabels, ylabels, data, savename = None,
                labelfontsize = 18, labelrotation = 45,
                spacing = 0.025, colormap = "Blues",
-               fmt = "%.1f", title = None):
+               fmt = "%.1f", title = None, cmin = None,
+               cmax = None):
     '''
     Creates a `matplotlib.pyplot` version of a simple 2D
     table, where the values in each cell are color coded
@@ -38,7 +39,8 @@ def ColorTable(xlabels, ylabels, data, savename = None,
     datav = data.reshape([-1])
 
     # Get colormap for data range
-    vcolors, smap, cnorm = colorize(datav, cmap=colormap)
+    vcolors, smap, cnorm = colorize(datav, cmap=colormap, vmin = cmin,
+                                    vmax = cmax)
 
     # Create figure
     fig, ax = plt.subplots(Ny ,Nx, figsize = (Nx,Ny))
@@ -76,8 +78,17 @@ def ColorTable(xlabels, ylabels, data, savename = None,
             else:
                 textcolor = "#ffffff"
 
+            # Determine if greater/less than signs are needed
+            text = fmt %data[ix, iy]
+            if cmax is not None:
+                if data[ix, iy] > cmax:
+                    text = r"$>$"+fmt %cmax
+            if cmin is not None:
+                if data[ix, iy] < cmin:
+                    text = r"$<$"+fmt %cmin
+
             # Add text to plot
-            ax[iy, ix].text(0.5, 0.5, fmt %data[ix, iy], ha="center", va="center",
+            ax[iy, ix].text(0.5, 0.5, text, ha="center", va="center",
                             bbox=dict(boxstyle="square", fc="w", ec="w", alpha=0.0),
                             color = textcolor)
 
