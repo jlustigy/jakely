@@ -7,4 +7,4 @@ Created on Fri Mar  4 13:39:45 2016
 
 from .find_nearest import find_nearest
 from .deluxetable import deluxetable
-from .Say import Say
+from .say import say

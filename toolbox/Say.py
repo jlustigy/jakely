@@ -1,7 +1,7 @@
 import subprocess
 import platform
     
-def Say(value, rate = 180):
+def say(value, rate = 180):
     """
     Similar to the `print()` function, but for spoken text using the `say` command 
     on Mac OS
