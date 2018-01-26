@@ -9,3 +9,4 @@ from .hexbin_dots import plot_hexbin_dots as hexbin_dots
 from .color_corner import PCA_corner
 from .set_figure_colors import set_backgroundcolor, set_foregroundcolor, set_figure_colors
 from .colortable import *
+from .custom_color_maps import *
