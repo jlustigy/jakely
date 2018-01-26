@@ -25,7 +25,8 @@ def ColorTable(xlabels, ylabels, data, savename = None,
                labelfontsize = 18, labelrotation = 45,
                spacing = 0.025, colormap = "Blues",
                fmt = "%.1f", title = None, cmin = None,
-               cmax = None):
+               cmax = None, xlabel = None, ylabel = None,
+               xlabel_spacing = 0.00, ylabel_spacing = 0.00):
     '''
     Creates a `matplotlib.pyplot` version of a simple 2D
     table, where the values in each cell are color coded
@@ -113,6 +114,18 @@ def ColorTable(xlabels, ylabels, data, savename = None,
         ax[iy,0].set_yticks([0.5])
         # Set tick label by user provided
         ax[iy,0].set_yticklabels([ylabels[iy]], rotation = labelrotation, fontsize = labelfontsize, ha = "right")
+
+    # Set ylabel
+    if ylabel is not None:
+        fig.text(ylabel_spacing, 0.5, ylabel, ha = "left", va = "center",
+            fontsize=mpl.rcParams['font.size'], zorder=10, rotation = 90,
+            bbox=dict(boxstyle="square", fc="none", ec="none"))
+
+    # Set xlabel
+    if xlabel is not None:
+        fig.text(0.5, xlabel_spacing, xlabel, ha = "center", va = "bottom",
+                fontsize=mpl.rcParams['font.size'], zorder=10,
+                bbox=dict(boxstyle="square", fc="none", ec="none"))
 
     # Save figure, optional
     if savename is not None:
