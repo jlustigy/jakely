@@ -57,7 +57,7 @@ def PCA_corner(x, y, lowdim, color=None, N=None, size=5, xlabel="", ylabel="", h
 
     # Set Params
     PC_labels = ['PC'+str(i+1) for i in range(N)]
-    PC_plot_lims = [(np.floor(np.min(PCs[:,i])), np.ceil(np.max(PCs[:,i]))) for i in range(N)]
+    PC_plot_lims = [(np.min(PCs[:,i]), np.max(PCs[:,i])) for i in range(N)]
     figlen = (N+1)*2
     subN = int(np.floor(N/2.0))
 
