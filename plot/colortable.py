@@ -26,7 +26,8 @@ def ColorTable(xlabels, ylabels, data, savename = None,
                spacing = 0.025, colormap = "Blues",
                fmt = "%.1f", title = None, cmin = None,
                cmax = None, xlabel = None, ylabel = None,
-               xlabel_spacing = 0.00, ylabel_spacing = 0.00):
+               xlabel_spacing = 0.00, ylabel_spacing = 0.00,
+               nancolor = (0.0, 0.0, 0.0)):
     '''
     Creates a `matplotlib.pyplot` version of a simple 2D
     table, where the values in each cell are color coded
@@ -68,13 +69,16 @@ def ColorTable(xlabels, ylabels, data, savename = None,
             # Set boxcolor by colormap
             boxcolor = smap.cmap(cnorm(data[ix, iy]))
 
+            if np.isnan(data[ix, iy]):
+                boxcolor = nancolor
+
             # Set the facecolor to boxcolor
             ax[iy, ix].set_facecolor(boxcolor)
 
             # Get RGB
-            R = smap.cmap(cnorm(data[ix, iy]))[0] * 255
-            G = smap.cmap(cnorm(data[ix, iy]))[1] * 255
-            B = smap.cmap(cnorm(data[ix, iy]))[2] * 255
+            R = boxcolor[0] * 255
+            G = boxcolor[1] * 255
+            B = boxcolor[2] * 255
 
             # Calculate grey "brightness"
             grey = (R*0.299 + G*0.587 + B*0.114)
@@ -85,8 +89,13 @@ def ColorTable(xlabels, ylabels, data, savename = None,
             else:
                 textcolor = "#ffffff"
 
+            # Catch nans and infs
+            if np.isfinite(data[ix, iy]):
+                text = fmt %data[ix, iy]
+            else:
+                text = "%.2f" %data[ix, iy]
+
             # Determine if greater/less than signs are needed
-            text = fmt %data[ix, iy]
             if cmax is not None:
                 if data[ix, iy] > cmax:
                     text = r"$>$"+fmt %cmax
