@@ -65,8 +65,10 @@ def ColorTable(xlabels, ylabels, data, savename = None,
             ax[iy, ix].set_xticks([])
             ax[iy, ix].set_yticks([])
 
-            # Set boxcolor
+            # Set boxcolor by colormap
             boxcolor = smap.cmap(cnorm(data[ix, iy]))
+
+            # Set the facecolor to boxcolor
             ax[iy, ix].set_facecolor(boxcolor)
 
             # Get RGB
