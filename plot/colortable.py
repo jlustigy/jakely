@@ -19,7 +19,7 @@ else:
     mpl.rc('font', family='Times New Roman')
     mpl.rc('text', usetex=False)
 
-__all__ = ["ColorTable", "test_colortable"]
+__all__ = ["ColorTable", "test_colortable", "ColorTableLinks"]
 
 def ColorTable(xlabels, ylabels, data, savename = None,
                labelfontsize = 18, labelrotation = 45, textsize = 18,
