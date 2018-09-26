@@ -27,7 +27,7 @@ def ColorTable(xlabels, ylabels, data, savename = None,
                fmt = "%.1f", title = None, cmin = None,
                cmax = None, xlabel = None, ylabel = None,
                xlabel_spacing = 0.00, ylabel_spacing = 0.00,
-               nancolor = (0.0, 0.0, 0.0)):
+               nancolor = (0.0, 0.0, 0.0), titlefontsize = 20):
     '''
     Creates a `matplotlib.pyplot` version of a simple 2D
     table, where the values in each cell are color coded
@@ -49,11 +49,11 @@ def ColorTable(xlabels, ylabels, data, savename = None,
                                     vmax = cmax)
 
     # Create figure
-    fig, ax = plt.subplots(Ny ,Nx, figsize = (Nx,Ny))
+    fig, ax = plt.subplots(Ny, Nx, figsize = (Nx,Ny))
 
     # Set title, optional
     if title is not None:
-        fig.suptitle(title, va = "top")
+        ax[0, int(Nx/2)].set_title(title, fontsize = titlefontsize)
 
     # Adjust spacing
     plt.subplots_adjust(wspace=spacing, hspace=spacing)
@@ -150,7 +150,7 @@ def ColorTableLinks(xlabels, ylabels, data, links, savetag = None,
                     fmt = "%.1f", title = None, cmin = None,
                     cmax = None, xlabel = None, ylabel = None,
                     xlabel_spacing = 0.00, ylabel_spacing = 0.00,
-                    nancolor = (0.0, 0.0, 0.0)):
+                    nancolor = (0.0, 0.0, 0.0), titlefontsize = 20):
     '''
     Creates a `matplotlib.pyplot` version of a simple 2D
     table, where the values in each cell are color coded
@@ -177,7 +177,7 @@ def ColorTableLinks(xlabels, ylabels, data, links, savetag = None,
 
     # Set title, optional
     if title is not None:
-        fig.suptitle(title, va = "top")
+        ax[0, int(Nx/2)].set_title(title, fontsize = titlefontsize)
 
     # Adjust spacing
     plt.subplots_adjust(wspace=spacing, hspace=spacing)
