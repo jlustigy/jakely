@@ -27,11 +27,22 @@ def ColorTable(xlabels, ylabels, data, savename = None,
                fmt = "%.1f", title = None, cmin = None,
                cmax = None, xlabel = None, ylabel = None,
                xlabel_spacing = 0.00, ylabel_spacing = 0.00,
-               nancolor = (0.0, 0.0, 0.0), titlefontsize = 20):
+               nancolor = (0.0, 0.0, 0.0), nantext = "", titlefontsize = 20,
+               data_pm = None):
     '''
     Creates a `matplotlib.pyplot` version of a simple 2D
     table, where the values in each cell are color coded
     for easy viewing.
+
+    Parameters
+    ----------
+    xlabels : list or `numpy.array`
+    ylabels : list or `numpy.array`
+    data : `numpy.array`
+    data_pm : list or tuple
+        List or tuple of two `numpy.array`  e.g. ``[data_plus, data_minus]``, one
+        array to display as the upper percentile and one array for the lower
+        percentile.
     '''
 
     assert len(xlabels) == data.shape[0]
@@ -91,17 +102,27 @@ def ColorTable(xlabels, ylabels, data, savename = None,
 
             # Catch nans and infs
             if np.isfinite(data[ix, iy]):
-                text = fmt %data[ix, iy]
-            else:
-                text = "%.2f" %data[ix, iy]
 
-            # Determine if greater/less than signs are needed
-            if cmax is not None:
-                if data[ix, iy] > cmax:
-                    text = r"$>$"+fmt %cmax
-            if cmin is not None:
-                if data[ix, iy] < cmin:
-                    text = r"$<$"+fmt %cmin
+                # Baseline text
+                text = fmt %data[ix, iy]
+
+                # Add percentile text if proided
+                if data_pm is not None:
+                    text += "$^{+%s}_{-%s}$" %(fmt %data_pm[0][ix,iy], fmt %data_pm[1][ix,iy])
+
+                # Determine if greater/less than signs are needed
+                if cmax is not None:
+                    if data[ix, iy] > cmax:
+                        text = r"$>$"+fmt %cmax
+                if cmin is not None:
+                    if data[ix, iy] < cmin:
+                        text = r"$<$"+fmt %cmin
+
+            else:
+
+                # This is not a number. Use nantext
+                text = nantext
+
 
             # Add text to plot
             ax[iy, ix].text(0.5, 0.5, text, ha="center", va="center",
