@@ -6,9 +6,6 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec
 import os
 
-mpl.rc('font',family='Times New Roman')
-mpl.rcParams['font.size'] = 18.0
-
 def irgb_string_from_spectrum(wl, spectrum):
     """
     Calculates the irgb color given a wavelengh [nm] vs intensity [W/m*m/um]

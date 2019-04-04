@@ -11,14 +11,6 @@ from matplotlib import gridspec, rc, ticker
 sys.path.insert(1, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from colorize import colorize
 
-import platform
-if platform.system() == 'Darwin':
-    mpl.rc('font',**{'family':'serif','serif':['Computer Modern']})
-    mpl.rc('text', usetex=True)
-else:
-    mpl.rc('font', family='Times New Roman')
-    mpl.rc('text', usetex=False)
-
 __all__ = ["ColorTable", "test_colortable", "ColorTableLinks"]
 
 def ColorTable(xlabels, ylabels, data, savename = None,
