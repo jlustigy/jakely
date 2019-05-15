@@ -130,14 +130,16 @@ def ColorTable(xlabels, ylabels, data, savename = None,
         # Set tick to be in middle
         ax[-1,ix].set_xticks([0.5])
         # Set tick label by user provided
-        ax[-1,ix].set_xticklabels([xlabels[ix]], rotation = labelrotation, fontsize = labelfontsize, ha = "right")
+        ax[-1,ix].set_xticklabels([xlabels[ix]], rotation = labelrotation,
+                                  fontsize = labelfontsize, ha = "right")
 
     # Loop over y
     for iy in range(Ny):
         # Set tick to be in middle
         ax[iy,0].set_yticks([0.5])
         # Set tick label by user provided
-        ax[iy,0].set_yticklabels([ylabels[iy]], rotation = labelrotation, fontsize = labelfontsize, ha = "right")
+        ax[iy,0].set_yticklabels([ylabels[iy]], rotation = labelrotation,
+                                 fontsize = labelfontsize, ha = "right")
 
     # Set ylabel
     if ylabel is not None:
