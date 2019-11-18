@@ -43,14 +43,14 @@ class deluxetable:
             Make a table spanning the half page width (for two column)
         """
 
-        if colnames == []: raise InputError, 'must have column names specified!'
+        if colnames == []: raise InputError('must have column names specified!')
 
-        if data == []: raise InputError, 'must have data provided!'
+        if data == []: raise InputError('must have data provided!')
 
         if not len(colnames) == len(data):
-            raise InputError, 'number of column names does match number of columns in the data!'
+            raise InputError('number of column names does match number of columns in the data!')
         elif not colsetting == '' and not len(colsetting) == len(colnames):
-            raise InputError, 'number of control characters in the colsetting does not match number of columns'
+            raise InputError('number of control characters in the colsetting does not match number of columns')
         elif colsetting == '':
             colsetting = 'c' * len(colnames)
         else:pass

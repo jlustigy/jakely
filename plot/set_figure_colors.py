@@ -76,3 +76,36 @@ def set_figure_colors(fig, foreground="white", background="black"):
         set_backgroundcolor(ax, background)
 
     fig.set_facecolor(background)
+
+def determine_contrasting_color(color):
+    """
+    Given a color, determine whether black or white contrasts better with the
+    color's grayscale value. This is useful for determining the color of text
+    that should be used on top of a color.
+
+    Parameters
+    ----------
+    color : list or tuple
+        RGB color
+
+    Returns
+    -------
+    textcolor : str
+        A string hex color that is either black or white 
+    """
+
+    # Get RGB
+    R = color[0] * 255
+    G = color[1] * 255
+    B = color[2] * 255
+
+    # Calculate grey "brightness"
+    grey = (R*0.299 + G*0.587 + B*0.114)
+
+    # Set text color based on brightness
+    if grey > 186:
+        textcolor = "#000000"
+    else:
+        textcolor = "#ffffff"
+
+    return textcolor
