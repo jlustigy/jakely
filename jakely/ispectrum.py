@@ -1,10 +1,16 @@
+from __future__ import (division as _, print_function as _,
+                absolute_import as _, unicode_literals as _)
+
 from colorpy import colormodels, ciexyz
-from ..plot import set_figure_colors
+from .plot import set_figure_colors
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 import os
+
+__all__ = ["irgb_string_from_spectrum", "make_color_swatch", "plot_response",
+           "rgb_from_wavelength", "plot_spectrum"]
 
 def irgb_string_from_spectrum(wl, spectrum):
     """

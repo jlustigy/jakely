@@ -2,3 +2,17 @@
 *~
 *.ipynb_checkpoints*
 *.DS_Store
+
+# Packages/installer info
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+distribute-*.tar.gz
